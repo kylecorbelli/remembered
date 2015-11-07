@@ -1,0 +1,82 @@
+db.users.update({
+    "_id" : ObjectId("5635226ab97e160144706217")
+}, {
+    $addToSet: {
+        "items": "poo"
+    }
+})
+
+db.users.insert({
+    "email": "jake@mail.com",
+    "firstName": "Jake",
+    "password": "bark",
+    "items": []
+})
+
+db.users.update({
+    "_id" : ObjectId("5635226ab97e160144706217")
+}, {
+    $set: {
+        "items": []
+    }
+})
+
+db.users.update({
+    "_id" : ObjectId("5635226ab97e160144706217")
+}, {
+    $pull: {
+        "items": "balls"
+    }
+})
+
+db.users.update({
+    "_id" : ObjectId("56379be5056b013f361af010")
+}, {
+    $set: {
+        "password": "newJake"
+    }
+})
+
+db.users.update({
+    "_id" : ObjectId("56379be5056b013f361af010")
+}, {
+    $pull: {
+        "items": null
+    }
+})
+
+db.users.find({
+    "_id": 
+})
+
+router.post('/login', function(req, res, next) {
+    MongoClient.connect(dbUrl, function(err, db) {
+        if (err) throw err;
+        db.collection('users').find({
+            "email": req.body.email,
+            "password": req.body.password
+        }).toArray(function(err, docs) {
+            if (err) throw err;
+            if (docs.length === 1) {
+                console.log('docs:');
+                console.log(docs);
+                console.log('docs[0]:');
+                console.log(docs[0]);
+                req.session._id = docs[0]._id;
+                req.session.firstName = docs[0].firstName;
+                req.session.lastName = docs[0].lastName;
+                req.session.email = docs[0].email;
+                req.session.items = docs[0].items;
+                req.session.save(function(err) {
+                    if (err) throw err;
+                    console.log('req.session:');
+                    console.log(req.session);
+                    res.end(JSON.stringify(docs[0]));
+                });
+            } else {
+                res.json({'loginError': 'The username and password do not match what we have on file. Please try again.'});
+            }
+            db.close();
+        });
+    });
+});

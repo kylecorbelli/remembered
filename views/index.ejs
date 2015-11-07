@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+    <head><% include partials/template/head.ejs %></head>
+    <body ng-controller="loginCtrl">
+        <% include partials/template/navbar.ejs %>
+        <div class="container">
+            <div class="col-sm-6 col-sm-push-3">
+                <!-- Welcome message for users not logged in -->
+                <div class="text-center" ng-hide="session.firstName || loginFlag || signUpFlag">
+                    <h1>Welcome to <span class="brand-font">remembered</span></h1>
+                    <p class="main-color-text">The easy way to remember things</p>
+                    <img src="images/check_box_white.png" alt="remembered.com checkbox">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn btn-primary btn-block" ng-click="startLogin()">Login</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-info btn-block" ng-click="startSignUp()">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="loginFlag">
+                    <% include partials/content/loginForm.ejs %>
+                </div>
+                <div ng-show="signUpFlag">
+                    <% include partials/content/signUpForm.ejs %>
+                </div>
+            </div>
+            <div class="col-sm-8 col-sm-push-2" ng-show="showMain">
+                <div ng-show="session.firstName">
+                    <% include partials/content/userItems.ejs %>
+                </div>
+            </div><!-- div.col-sm-8.col-sm-push-2 -->
+            <% include partials/template/footer.ejs %>
+        </div><!-- div.container -->
+        <% include partials/template/jsDefaults.ejs %>
+    </body>
+</html>

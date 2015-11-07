@@ -1,0 +1,30 @@
+<h3 class="main-color-text">Welcome, {{ session.firstName}}</h3>
+<table class="table table-striped table-hover">
+    <tbody>
+        <tr>
+            <td>
+                <form name="addItemForm" ng-submit="addItem()" novalidate>
+                    <input id="itemToAddInput" class="form-control" type="text" ng-model="itemToAdd" placeholder="Add new item..." required />
+                    <button ng-show="false" type="submit" ng-disabled="addItemForm.$invalid">Add item</button>
+                </form>
+            </td>
+        </tr>
+        <tr ng-repeat="item in session.items | reverse">
+            <td>
+                <div ng-class="{spaced: selectedItem[item]}" ng-click="selectItem(item)">{{ item }}</div>
+                <div class="row" ng-show="selectedItem[item]">
+                    <!-- <div class="col-sm-4">
+                        <button class="btn btn-block btn-primary">Got it</button>
+                    </div> -->
+                    <div class="col-xs-6">
+                        <button class="btn btn-block btn-danger" ng-click="removeItem(item)">Delete</button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-block btn-info" ng-click="deselectItem(item)">Cancel</button>
+                    </div>
+                </div>
+            </td>
+            
+        </tr>
+    </tbody>
+</table>

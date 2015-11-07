@@ -1,0 +1,39 @@
+.navbar-brand {
+    font-family: 'Poiret One', cursive;
+}
+
+.brand-font {
+    font-family: 'Poiret One', cursive;   
+}
+
+.main-color-text {
+    color: #00bc8c;
+}
+
+.spaced {
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+footer {
+    text-align: center;
+    background-color: #222222;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 5px;
+    overflow: hidden;
+}

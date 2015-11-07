@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+    <head><% include partials/template/head.ejs %></head>
+    <body ng-controller="loginCtrl">
+        <% include partials/template/navbar.ejs %>
+        <div class="container">
+            <div class="col-md-6 col-md-push-3">
+                <form name="settingsForm" ng-hide="changingPassword || deletingAccount" novalidate>
+                    <h3 class="main-color-text">Settings</h3>
+                    <div class="form-group">
+                        <label>First Name:</label>
+                        <div class="input-group" ng-show="editingSettings">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input class="form-control" type="text" ng-model="session.firstName" required />
+                        </div>
+                        <p ng-hide="editingSettings">{{ session.firstName }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <div class="input-group" ng-show="editingSettings">
+                            <span class="input-group-addon"><i class="fa fa-at"></i></span>
+                            <input class="form-control" type="email" ng-model="session.email" required />
+                        </div>
+                        <p ng-hide="editingSettings">{{ session.email }}</p>
+                    </div>
+                    <div class="form-group" ng-show="editingSettings">
+                        <label>Confirm Current Password:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input class="form-control" type="password" ng-model="settingsConfirmPass" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <ul ng-show="updateSettingsErrors && editingSettings">
+                            <li class="error" ng-repeat="error in updateSettingsErrors">{{ error }}</li>
+                        </ul>
+                        <p class="success" ng-show="updateSettingsSuccess">
+                            {{ updateSettingsSuccess }}
+                        </p>
+                        <div class="row" ng-show="editingSettings">
+                            <div class="col-xs-6">
+                                <button class="btn btn-block btn-danger" type="submit" ng-disabled="settingsForm.$invalid" ng-click="saveEditSettings()">Save</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-block btn-info" ng-click="cancelEditSettings()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group" ng-hide="editingSettings || changingPassword || deletingAccount">
+                    <button class="btn btn-block btn-primary" ng-click="startEditSettings()">Edit Settings</button>
+                </div>
+                <div class="form-group" ng-hide="editingSettings || changingPassword || deletingAccount">
+                    <button class="btn btn-block btn-info" ng-click="startChangingPassword()">Change Password</button>
+                </div>
+                <div class="form-group" ng-hide="editingSettings || changingPassword || deletingAccount">
+                    <button class="btn btn-block btn-default" ng-click="startDeletingAccount()">Delete Account</button>
+                </div>
+                <form name="deleteAccountForm" ng-show="deletingAccount">
+                    <h3>Permanently Delete Account?</h3>
+                    <div class="form-group">
+                        <label>Confirm Current Password:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input class="form-control" type="password" ng-model="deletePass" required />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="deleteAccountError">
+                        <p class="error">{{ deleteAccountError }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn btn-danger btn-block" ng-disabled="deleteAccountForm.$invalid" ng-click="saveDeletingAccount()">Delete</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-block btn-info" ng-click="cancelDeletingAccount()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <form name="changePasswordForm" ng-hide="editingSettings" novalidate>
+                    <div class="form-group" ng-show="changingPassword">
+                        <label>Current Password</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input class="form-control" type="password" ng-model="changePassCurrPass" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="changingPassword">
+                        <label>New Password</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input class="form-control" type="password" ng-model="changePassNewPass" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="changingPassword">
+                        <label>Confirm New Password</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input class="form-control" type="password" ng-model="changePassConfPass" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="changingPassword && changePassErrors">
+                        <p class="error">{{ changePassErrors }}</p>
+                    </div>
+                    <div class="form-group" ng-show="changePassSuccess">
+                        <p class="success">{{ changePassSuccess }}</p>
+                    </div>
+                    <div class="row" ng-show="changingPassword">
+                        <div class="col-xs-6">
+                            <button class="btn btn-block btn-danger" type="submit" ng-disabled="changePasswordForm.$invalid" ng-click="saveChangingPassword()">Save</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-block btn-info" ng-click="cancelChangingPassword()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- div.col-md-6.col-md-push-3 -->
+        </div><!-- div.container -->
+        <% include partials/template/footer.ejs %>
+        <% include partials/template/jsDefaults.ejs %>
+    </body>
+</html>
