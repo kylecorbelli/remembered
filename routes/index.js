@@ -19,15 +19,6 @@ var router = express.Router();
 var dbUrl = 'mongodb://admin:jakeyboy@ds051534.mongolab.com:51534/remembered';
 // var dbUrl = 'mongodb://localhost:27017/login';
 
-var transporter = nodemailer.createTransport();
-
-// {
-//     service: 'Gmail',
-//     auth: {
-//         user: 'kyle.corbelli@gmail.com',
-//         pass: 'mcdack72785'
-//     }
-// }
 
 router.get('/public/checkbox.ico', function(req, res, next) {
     res.send('/checkbox.ico');
